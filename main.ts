@@ -2,17 +2,22 @@ function check () {
     huskylens.request()
     Normforward()
     if (huskylens.isAppear(ID_Red, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Blue, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_Green, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_White, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Yellow, HUSKYLENSResultType_t.HUSKYLENSResultBlock)))) {
-        while (second < 2) {
-            second += 1
-            Backward()
-            basic.showNumber(second)
+        if (SeeCount == 0) {
+            while (second < 2) {
+                second += 1
+                Backward()
+                basic.showNumber(second)
+            }
+            second = 0
+            iBIT.MotorStop()
+            SeeCount = 1
+            basic.pause(200)
+        } else {
+            SeeCount = 0
+            checkColor()
+            Normforward()
+            iBIT.MotorStop()
         }
-        second = 0
-        iBIT.MotorStop()
-        basic.pause(1000)
-        checkColor()
-        Normforward()
-        iBIT.MotorStop()
     }
 }
 function PlaceColorBlue () {
@@ -24,7 +29,7 @@ function forwardToCollect () {
 }
 function Collect () {
     basic.pause(200)
-    while (second < 4) {
+    while (second < 3) {
         second += 1
         forwardToCollect()
         basic.showNumber(second)
@@ -158,6 +163,7 @@ function Backward () {
     iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Backward, 25)
 }
 let second = 0
+let SeeCount = 0
 let ID_Green = 0
 let ID_White = 0
 let ID_Yellow = 0
@@ -172,6 +178,7 @@ ID_Yellow = 2
 ID_White = 4
 ID_Green = 5
 let run = 0
+SeeCount = 0
 basic.forever(function () {
     while (run == 1) {
         check()
