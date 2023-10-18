@@ -1,7 +1,7 @@
 function check () {
     huskylens.request()
     Normforward()
-    if (huskylens.isAppear(ID_Red, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Blue, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_Green, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_White, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Yellow, HUSKYLENSResultType_t.HUSKYLENSResultBlock)))) {
+    if (huskylens.readeBox(ID_Red, Content1.yCenter) >= 120 || huskylens.readeBox(ID_Blue, Content1.yCenter) >= 120 || huskylens.readeBox(ID_Yellow, Content1.yCenter) >= 120 || (huskylens.readeBox(ID_White, Content1.yCenter) >= 120 || huskylens.readeBox(ID_Green, Content1.yCenter) >= 120)) {
         if (SeeCount == 0) {
             while (second < 2) {
                 second += 1
@@ -13,10 +13,10 @@ function check () {
             SeeCount = 1
             basic.pause(200)
         } else {
-            SeeCount = 0
             checkColor()
             Normforward()
             iBIT.MotorStop()
+            SeeCount = 0
         }
     }
 }
@@ -24,12 +24,12 @@ function PlaceColorBlue () {
     backwardTodropBlue()
 }
 function forwardToCollect () {
-    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 26)
-    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 30)
+    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 29)
+    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 35)
 }
 function Collect () {
     basic.pause(200)
-    while (second < 5) {
+    while (second < 3) {
         second += 1
         forwardToCollect()
         basic.showNumber(second)
@@ -91,7 +91,7 @@ function backwardTodropBlue () {
         `)
 }
 function checkColor () {
-    if (huskylens.isAppear(ID_Red, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+    if (huskylens.readeBox(ID_Red, Content1.yCenter) >= 120) {
         iBIT.MotorStop()
         basic.showLeds(`
             # . . . #
@@ -101,7 +101,7 @@ function checkColor () {
             . # # # #
             `)
         Red()
-    } else if (huskylens.isAppear(ID_Blue, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+    } else if (huskylens.readeBox(ID_Blue, Content1.yCenter) >= 120) {
         iBIT.MotorStop()
         basic.showLeds(`
             # . . . #
@@ -111,7 +111,7 @@ function checkColor () {
             # # # # .
             `)
         Blue()
-    } else if (huskylens.isAppear(ID_Green, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_White, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Yellow, HUSKYLENSResultType_t.HUSKYLENSResultBlock))) {
+    } else if (huskylens.readeBox(ID_Green, Content1.yCenter) >= 120 || (huskylens.readeBox(ID_White, Content1.yCenter) >= 120 || huskylens.readeBox(ID_Yellow, Content1.yCenter) >= 120)) {
         iBIT.MotorStop()
         basic.showLeds(`
             . . # . .
@@ -133,8 +133,8 @@ function close () {
     iBIT.Servo(ibitServo.SV1, 70)
 }
 function Normforward () {
-    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 22)
-    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 25)
+    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 24)
+    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 28)
 }
 function PlaceColorRed () {
     backwardTodropRed()
