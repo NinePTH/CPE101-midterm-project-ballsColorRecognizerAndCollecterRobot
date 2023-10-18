@@ -10,6 +10,7 @@ function check () {
         second = 0
         iBIT.MotorStop()
         Normforward()
+        basic.pause(200)
         if (huskylens.isAppear(ID_Red, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
             iBIT.MotorStop()
             basic.showLeds(`
@@ -51,7 +52,7 @@ function forwardToCollect () {
 }
 function Collect () {
     basic.pause(200)
-    while (second < 2) {
+    while (second < 4) {
         second += 1
         forwardToCollect()
         basic.showNumber(second)
@@ -66,6 +67,9 @@ function Collect () {
         . . # . .
         . . # . .
         `)
+}
+function TurnLeft () {
+    iBIT.Turn(ibitTurn.Left, 50)
 }
 input.onButtonPressed(Button.A, function () {
     run += 1
@@ -87,6 +91,9 @@ input.onButtonPressed(Button.B, function () {
 function Other () {
     iBIT.Servo(ibitServo.SV1, 110)
     Collect()
+}
+function TurnRight () {
+    iBIT.Turn(ibitTurn.Right, 50)
 }
 function Blue () {
     iBIT.Servo(ibitServo.SV1, 180)
