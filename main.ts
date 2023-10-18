@@ -55,6 +55,10 @@ basic.forever(function () {
         iBIT.MotorStop()
         basic.showIcon(IconNames.Happy)
         white()
+    } else if (huskylens.isAppear(3, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+        iBIT.MotorStop()
+        basic.showIcon(IconNames.Duck)
+        Blue()
     } else {
         close()
     }
