@@ -1,8 +1,12 @@
+function forwardToCollect () {
+    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 33)
+    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 38)
+}
 function Collect () {
     basic.pause(200)
     while (second < 5) {
         second += 1
-        forward()
+        forwardToCollect()
         basic.showNumber(second)
     }
     second = 0
@@ -14,25 +18,21 @@ function white () {
     Collect()
 }
 input.onButtonPressed(Button.A, function () {
-    forward2()
+    Normforward()
 })
-function forward2 () {
-    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 23)
-    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 25)
-}
 function close () {
     iBIT.Servo(ibitServo.SV1, 70)
 }
+function Normforward () {
+    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 44)
+    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 50)
+}
 input.onButtonPressed(Button.AB, function () {
-    Blue()
+    iBIT.Servo(ibitServo.SV1, 35)
 })
 input.onButtonPressed(Button.B, function () {
-    close()
+    iBIT.Servo(ibitServo.SV1, 180)
 })
-function forward () {
-    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 18)
-    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 20)
-}
 function Blue () {
     iBIT.Servo(ibitServo.SV1, 180)
     Collect()
@@ -60,6 +60,6 @@ basic.forever(function () {
         basic.showIcon(IconNames.Duck)
         Blue()
     } else {
-        close()
+    	
     }
 })
