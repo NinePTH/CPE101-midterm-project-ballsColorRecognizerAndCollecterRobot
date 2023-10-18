@@ -24,12 +24,12 @@ function PlaceColorBlue () {
     backwardTodropBlue()
 }
 function forwardToCollect () {
-    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 29)
-    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 35)
+    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 26)
+    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 30)
 }
 function Collect () {
     basic.pause(200)
-    while (second < 3) {
+    while (second < 5) {
         second += 1
         forwardToCollect()
         basic.showNumber(second)
@@ -143,8 +143,10 @@ input.onButtonPressed(Button.AB, function () {
 	
 })
 input.onButtonPressed(Button.B, function () {
+    basic.showIcon(IconNames.No)
     iBIT.Servo(ibitServo.SV1, 70)
     run += 0
+    basic.showIcon(IconNames.Yes)
 })
 function Other () {
     iBIT.Servo(ibitServo.SV1, 110)
@@ -172,10 +174,10 @@ let ID_Red = 0
 huskylens.initI2c()
 huskylens.initMode(protocolAlgorithm.ALGORITHM_COLOR_RECOGNITION)
 basic.showIcon(IconNames.Ghost)
-ID_Red = 1
-ID_Blue = 3
-ID_Yellow = 2
-ID_White = 4
+ID_Red = 3
+ID_Blue = 2
+ID_Yellow = 4
+ID_White = 1
 ID_Green = 5
 let run = 0
 SeeCount = 0
