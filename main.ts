@@ -1,37 +1,49 @@
 function check () {
     huskylens.request()
-    if (huskylens.isAppear(ID_Red, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
-        iBIT.MotorStop()
-        basic.showLeds(`
-            # . . . #
-            # . . # .
-            # . # . .
-            # # . . .
-            . # # # #
-            `)
-        Red()
-    } else if (huskylens.isAppear(ID_Blue, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
-        iBIT.MotorStop()
-        basic.showLeds(`
-            # . . . #
-            . # . . #
-            . . # . #
-            . . . # #
-            # # # # .
-            `)
-        Blue()
-    } else if (huskylens.isAppear(ID_Green, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_White, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Yellow, HUSKYLENSResultType_t.HUSKYLENSResultBlock))) {
-        iBIT.MotorStop()
-        basic.showLeds(`
-            . . # . .
-            . . # . .
-            # . # . #
-            . # # # .
-            . . # . .
-            `)
-        Other()
-    }
     Normforward()
+    if (huskylens.isAppear(ID_Red, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Blue, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_Green, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_White, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Yellow, HUSKYLENSResultType_t.HUSKYLENSResultBlock)))) {
+        while (second < 2) {
+            second += 1
+            Backward()
+            basic.showNumber(second)
+        }
+        second = 0
+        iBIT.MotorStop()
+        Normforward()
+        if (huskylens.isAppear(ID_Red, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+            iBIT.MotorStop()
+            basic.showLeds(`
+                # . . . #
+                # . . # .
+                # . # . .
+                # # . . .
+                . # # # #
+                `)
+            Red()
+        } else if (huskylens.isAppear(ID_Blue, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+            iBIT.MotorStop()
+            basic.showLeds(`
+                # . . . #
+                . # . . #
+                . . # . #
+                . . . # #
+                # # # # .
+                `)
+            Blue()
+        } else if (huskylens.isAppear(ID_Green, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_White, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Yellow, HUSKYLENSResultType_t.HUSKYLENSResultBlock))) {
+            iBIT.MotorStop()
+            basic.showLeds(`
+                . . # . .
+                . . # . .
+                # . # . #
+                . # # # .
+                . . # . .
+                `)
+            Other()
+        }
+        Normforward()
+        iBIT.MotorStop()
+    }
 }
 function forwardToCollect () {
     iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 29)
@@ -88,7 +100,6 @@ function Backward () {
     iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Backward, 22)
     iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Backward, 25)
 }
-let run = 0
 let second = 0
 let ID_Green = 0
 let ID_White = 0
@@ -103,7 +114,7 @@ ID_Blue = 3
 ID_Yellow = 2
 ID_White = 4
 ID_Green = 5
-ID_Green = 0
+let run = 0
 basic.forever(function () {
     while (run == 1) {
         check()
