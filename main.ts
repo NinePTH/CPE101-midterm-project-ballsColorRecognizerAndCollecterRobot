@@ -9,42 +9,14 @@ function check () {
         }
         second = 0
         iBIT.MotorStop()
-        Normforward()
-        basic.pause(200)
-        if (huskylens.isAppear(ID_Red, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
-            iBIT.MotorStop()
-            basic.showLeds(`
-                # . . . #
-                # . . # .
-                # . # . .
-                # # . . .
-                . # # # #
-                `)
-            Red()
-        } else if (huskylens.isAppear(ID_Blue, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
-            iBIT.MotorStop()
-            basic.showLeds(`
-                # . . . #
-                . # . . #
-                . . # . #
-                . . . # #
-                # # # # .
-                `)
-            Blue()
-        } else if (huskylens.isAppear(ID_Green, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_White, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Yellow, HUSKYLENSResultType_t.HUSKYLENSResultBlock))) {
-            iBIT.MotorStop()
-            basic.showLeds(`
-                . . # . .
-                . . # . .
-                # . # . #
-                . # # # .
-                . . # . .
-                `)
-            Other()
-        }
+        basic.pause(1000)
+        checkColor()
         Normforward()
         iBIT.MotorStop()
     }
+}
+function PlaceColorBlue () {
+    backwardTodropBlue()
 }
 function forwardToCollect () {
     iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 29)
@@ -68,18 +40,99 @@ function Collect () {
         . . # . .
         `)
 }
-function TurnLeft () {
-    iBIT.Turn(ibitTurn.Left, 50)
+function backwardTodropRed () {
+    iBIT.Servo(ibitServo.SV1, 35)
+    basic.pause(200)
+    while (second < 4) {
+        second += 1
+        BackLeft()
+        basic.showNumber(second)
+    }
+    second = 0
+    iBIT.MotorStop()
+    close()
+    basic.showLeds(`
+        . # # # .
+        . # # # .
+        . . # . .
+        . . # . .
+        . . # . .
+        `)
 }
 input.onButtonPressed(Button.A, function () {
     run += 1
 })
+function BackLeft () {
+    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Backward, 50)
+    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Backward, 10)
+}
+function backwardTodropBlue () {
+    iBIT.Servo(ibitServo.SV1, 180)
+    basic.pause(200)
+    while (second < 4) {
+        second += 1
+        BackRight()
+        basic.showNumber(second)
+    }
+    second = 0
+    iBIT.MotorStop()
+    close()
+    basic.showLeds(`
+        . # # # .
+        . # # # .
+        . . # . .
+        . . # . .
+        . . # . .
+        `)
+}
+function checkColor () {
+    if (huskylens.isAppear(ID_Red, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+        iBIT.MotorStop()
+        basic.showLeds(`
+            # . . . #
+            # . . # .
+            # . # . .
+            # # . . .
+            . # # # #
+            `)
+        Red()
+    } else if (huskylens.isAppear(ID_Blue, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+        iBIT.MotorStop()
+        basic.showLeds(`
+            # . . . #
+            . # . . #
+            . . # . #
+            . . . # #
+            # # # # .
+            `)
+        Blue()
+    } else if (huskylens.isAppear(ID_Green, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || (huskylens.isAppear(ID_White, HUSKYLENSResultType_t.HUSKYLENSResultBlock) || huskylens.isAppear(ID_Yellow, HUSKYLENSResultType_t.HUSKYLENSResultBlock))) {
+        iBIT.MotorStop()
+        basic.showLeds(`
+            . . # . .
+            . . # . .
+            # . # . #
+            . # # # .
+            . . # . .
+            `)
+        Other()
+    } else {
+        Normforward()
+    }
+}
+function BackRight () {
+    iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Backward, 10)
+    iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Backward, 50)
+}
 function close () {
     iBIT.Servo(ibitServo.SV1, 70)
 }
 function Normforward () {
     iBIT.setMotor(ibitMotorCH.M1, ibitMotor.Forward, 22)
     iBIT.setMotor(ibitMotorCH.M2, ibitMotor.Forward, 25)
+}
+function PlaceColorRed () {
+    backwardTodropRed()
 }
 input.onButtonPressed(Button.AB, function () {
 	
@@ -91,9 +144,6 @@ input.onButtonPressed(Button.B, function () {
 function Other () {
     iBIT.Servo(ibitServo.SV1, 110)
     Collect()
-}
-function TurnRight () {
-    iBIT.Turn(ibitTurn.Right, 50)
 }
 function Blue () {
     iBIT.Servo(ibitServo.SV1, 180)
